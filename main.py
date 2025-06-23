@@ -25,7 +25,15 @@ def main():
         else:
             selected_line_content = lines_in_file[selected_line_index]
         
-        selected_line_content = update_line_with_key(selected_line_content, key)
+        if (key is not None):
+            updated_line_by_key = update_line_with_key(selected_line_content, key)
+        else:
+            updated_line_by_key = selected_line_content
+
+
+        print("Debug content:")
+        print(f"  selected_line_content  = {selected_line_content}")
+        print(f"  updated_line_by_key   = {updated_line_by_key}")
 
 if __name__ == "__main__":
     main()

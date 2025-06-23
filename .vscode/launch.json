@@ -7,12 +7,20 @@
 
 
         {
-            "name": "Environment file",
+            "name": "Environment file - LD_LIBRARY_PATH",
             "type": "debugpy",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
             "args": ["file=/etc/environment", "field=LD_LIBRARY_PATH=", "value=;/usr/local/lib/"]
+        },
+        {
+            "name": "Environment file - PATH",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": ["file=/etc/environment", "field=PATH=", "value=;/usr/local/lib/"]
         },
         {
             "name": "Grub file",
