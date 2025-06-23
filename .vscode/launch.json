@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+
+        {
+            "name": "Environment file",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": ["file=/etc/environment", "field=LD_LIBRARY_PATH=", "value=;/usr/local/lib/"]
+        },
+        {
+            "name": "Grub file",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": ["file=/etc/default/grub", "field=GRUB_CMDLINE_LINUX_DEFAULT=", "key=isolcpus", "value=0-10"]
+        }
+    ]
+}

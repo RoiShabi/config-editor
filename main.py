@@ -2,6 +2,7 @@
 
 import sys
 from params_parse import parse_params
+from text_ops import search_line_index_in_content, update_line_with_key
 
 def main():
     args = sys.argv[1:]
@@ -15,6 +16,16 @@ def main():
     except Exception as e:
         print(f"Error: {e}\n")
         print("Usage: python main.py file=<file> field=<field> value=<value> [key=<key>]")
+    
+    with open(file_path, 'r') as file:
+        lines_in_file = file.readlines()
+        selected_line_index = search_line_index_in_content(lines_in_file, field)
+        if (selected_line_index == len(lines_in_file)):
+            selected_line_content = ""
+        else:
+            selected_line_content = lines_in_file[selected_line_index]
+        
+        selected_line_content = update_line_with_key(selected_line_content, key)
 
 if __name__ == "__main__":
     main()
