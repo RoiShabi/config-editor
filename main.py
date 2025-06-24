@@ -2,7 +2,7 @@
 
 import sys
 from params_parse import parse_params
-from text_ops import search_line_index_in_content, update_line_with_key
+from text_ops import search_line_index_in_content, mark_key_in_line, TextMarkedSpan, STATIC_LINE_ENDING
 
 def main():
     args = sys.argv[1:]
@@ -21,15 +21,19 @@ def main():
         lines_in_file = file.readlines()
         selected_line_index = search_line_index_in_content(lines_in_file, field)
         if (selected_line_index == len(lines_in_file)):
-            selected_line_content = ""
+            selected_line_content = field
         else:
             selected_line_content = lines_in_file[selected_line_index]
         
-        if (key is not None):
-            updated_line_by_key = update_line_with_key(selected_line_content, key)
+        if (key is None):
+            end_content_index = len(selected_line_content) - len(STATIC_LINE_ENDING)
+            updated_line_by_key = TextMarkedSpan(line_content=selected_line_content, content_to_insert="", start_index_to_mark=end_content_index)
         else:
-            updated_line_by_key = selected_line_content
+            updated_line_by_key = mark_key_in_line(selected_line_content, key)
 
+        
+
+        
 
         print("Debug content:")
         print(f"  selected_line_content  = {selected_line_content}")
