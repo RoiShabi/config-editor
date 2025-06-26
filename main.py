@@ -2,7 +2,7 @@
 
 import sys
 from params_parse import parse_params
-from text_ops import search_line_index_in_content, mark_key_in_line, TextMarkedSpan, STATIC_LINE_ENDING
+from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, TextMarkedSpan, STATIC_LINE_ENDING
 
 def main():
     args = sys.argv[1:]
@@ -21,23 +21,23 @@ def main():
         lines_in_file = file.readlines()
         selected_line_index = search_line_index_in_content(lines_in_file, field)
         if (selected_line_index == len(lines_in_file)):
-            selected_line_content = field
+            selected_line_content = field + STATIC_LINE_ENDING
         else:
             selected_line_content = lines_in_file[selected_line_index]
         
         if (key is None):
             end_content_index = len(selected_line_content) - len(STATIC_LINE_ENDING)
-            updated_line_by_key = TextMarkedSpan(line_content=selected_line_content, content_to_insert="", start_index_to_mark=end_content_index)
+            content_to_paste_span = TextMarkedSpan(line_content=selected_line_content, content_to_insert="", start_index_to_mark=end_content_index)
         else:
-            updated_line_by_key = mark_key_in_line(selected_line_content, key)
+            content_to_paste_span = mark_key_in_line(selected_line_content, key)
 
-        
+        set_value_to_span(content_to_paste_span, value)
 
         
 
         print("Debug content:")
         print(f"  selected_line_content  = {selected_line_content}")
-        print(f"  updated_line_by_key   = {updated_line_by_key}")
+        print(f"  updated_line_by_key   = {content_to_paste_span}")
 
 if __name__ == "__main__":
     main()
