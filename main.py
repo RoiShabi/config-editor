@@ -22,10 +22,13 @@ def main(argv: list[str]):
     with open(file_path, 'r') as file:
         lines_in_file = file.readlines()
         selected_line_index = search_line_index_in_content(lines_in_file, field)
+        original_line_content: str
         if (selected_line_index == len(lines_in_file)):
+            original_line_content = ""
             selected_line_content = field + STATIC_FIELD_ASSIGNMENT + STATIC_LINE_ENDING
         else:
-            selected_line_content = lines_in_file[selected_line_index]
+            original_line_content = lines_in_file[selected_line_index]
+            selected_line_content = original_line_content
         
         if (key is None):
             end_content_index = len(selected_line_content) - len(STATIC_LINE_ENDING)
@@ -45,11 +48,10 @@ def main(argv: list[str]):
         print(f"  value    = {value}")
         print(f"  key      = {key}")
         print(f"Inner variables:")
-        print(f"  selected_line_content  = {selected_line_content}")
         print(f"  updated_line_by_key   = {content_to_paste_span}")
         print(f"  updated_line_result (line {selected_line_index})  =")
-        print(f"  old: {selected_line_content})")
-        print(f"  new: {new_line})")
+        print(f"  old: {original_line_content}")
+        print(f"  new: {new_line}")
 
 if __name__ == "__main__":
     main(sys.argv)
