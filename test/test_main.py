@@ -25,23 +25,8 @@ class MainTest(unittest.TestCase):
     #     result = subject_main(['--help'])
     #     # TODO: assert that help message is shown
     #     # e.g.:
-    #     # self.assertEqual(result.returncode, 0)
-    #     # self.assertIn('Usage', result.stdout)
-
-    # def test_valid_input(self):
-    #     # TODO: set up a valid input file for testing
-    #     result = subject_main(['--input', 'input.txt', '--output', 'output.txt'])
-    #     # TODO: assert successful run and output file creation
-    #     # e.g.:
-    #     # self.assertEqual(result.returncode, 0)
-    #     # self.assertTrue(Path('output.txt').exists())
-
-    # def test_invalid_input_path(self):
-    #     result = subject_main(['--input', 'nonexistent.txt', '--output', 'out.txt'])
-    #     # TODO: assert error is reported for missing input
-    #     # e.g.:
-    #     # self.assertNotEqual(result.returncode, 0)
-    #     # self.assertIn('No such file or directory', result.stderr)
+    #     self.assertEqual(result.returncode, 0)
+    #     self.assertIn('Usage', result.stdout)
 
     # def test_additional_option(self):
     #     result = subject_main(['--verbose'])

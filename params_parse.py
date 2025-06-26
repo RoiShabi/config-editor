@@ -9,13 +9,19 @@ class ScriptConfiguration:
     file_path:str
     field: str
     value:str
-    key: Optional[str]
     delimiter: str
+    key: Optional[str]
 
-def parse_params(args: str) -> ScriptConfiguration:
+def check_help_params(argv: str) -> bool:
+    if(len(argv) != 1):
+        return False
+    
+    return argv[0].strip() == "--help"
+
+def parse_params(argv: list[str]) -> ScriptConfiguration:
     # extract parameters
 
-    params = dict(arg.split('=', 1) for arg in args)
+    params = dict(arg.split('=', 1) for arg in argv)
 
     # Extract required values
     field = params.get("field")

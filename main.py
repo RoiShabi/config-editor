@@ -1,15 +1,36 @@
 #!/usr/bin/env python3
 
 import sys
-from params_parse import parse_params, ScriptConfiguration
+from params_parse import check_help_params, parse_params, ScriptConfiguration
 from typing import Optional
 from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, generate_new_line, TextMarkedSpan, STATIC_LINE_ENDING, STATIC_FIELD_ASSIGNMENT
 
-def main(argv: list[str]):
-    args = argv[1:]
+def print_help():
+    help_msg = \
+        "Usage:\tconfig_editor.py file_path=... field=... value=... [OPTIONS]\n"\
+            "Patches small changes in a file, used for automations for environment setup. See project's tests for best utilization.\n\n"
+    
+    help_msg += "OPTIONS:\n"\
+        "\tdelimiter=...\tControl the delimiter used to seperate between values. Default is \',\'\n"\
+        "\t\t\t  e.g \':\' is used in format \"\"PATH=\"element1:element2:element3\" \"\"\n"\
+        "\t\t\t  e.g \',\' is used in format \"\"GRUB_CMDLINE_LINUX_DEFAULT=\"isolcpu=element1,element2,element3\" \"\"\n"\
+        \
+        "\tkey=...\t\tUsed if files where under the field the values are organized in a key=value or key=value1,value2 pairs\n"\
+        "\t\t\t  e.g \',\' is used in format \"\"GRUB_CMDLINE_LINUX_DEFAULT=\"isolcpu=element1,element2,element3\" \"\"\n"\
+
+    help_msg += "\n"
+    print(help_msg)
+
+def main(input_argv: list[str]):
+    argv_filtered = input_argv[1:]
+
+    if(check_help_params(argv_filtered)):
+        print_help()
+        return
+
     user_config: ScriptConfiguration
     try:
-        user_config = parse_params(args)
+        user_config = parse_params(argv_filtered)
     except Exception as e:
         print(f"Error: {e}")
         print("Usage: python main.py file=<file> field=<field> value=<value> [key=<key>]\n\n")
