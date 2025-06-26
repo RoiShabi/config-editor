@@ -3,7 +3,7 @@
 import sys
 from params_parse import parse_params
 from typing import Optional
-from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, generate_new_line, TextMarkedSpan, STATIC_LINE_ENDING
+from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, generate_new_line, TextMarkedSpan, STATIC_LINE_ENDING, STATIC_FIELD_ASSIGNMENT
 
 def main(argv: list[str]):
     args = argv[1:]
@@ -23,7 +23,7 @@ def main(argv: list[str]):
         lines_in_file = file.readlines()
         selected_line_index = search_line_index_in_content(lines_in_file, field)
         if (selected_line_index == len(lines_in_file)):
-            selected_line_content = field + STATIC_LINE_ENDING
+            selected_line_content = field + STATIC_FIELD_ASSIGNMENT + STATIC_LINE_ENDING
         else:
             selected_line_content = lines_in_file[selected_line_index]
         

@@ -19,6 +19,7 @@ class TextMarkedSpan:
     size_to_delete: int = 0
 
 STATIC_LINE_ENDING = "\"\n"
+STATIC_FIELD_ASSIGNMENT = "="
 STATIC_KEY_ASSIGNMENT = "="
 STATIC_VALUES_LIST_SEPERATION = " "
 STATIC_VALUES_SEPERATION = ";"

@@ -13,6 +13,7 @@ from main import main as subject_main
 
 TEST_TEMP_DIR = root_dir+"/test/temp"
 TEST_CASES_DIR = root_dir+"/test/test_cases"
+TEST_EXPECTED_RESULTS_DIR = root_dir+"/test/test_expected_results"
 TEST_SUBJECT_FILE = root_dir+"main.py"
 
 class MainTest(unittest.TestCase):
@@ -52,9 +53,28 @@ class MainTest(unittest.TestCase):
     def test_append_nohz_full(self):
         test_file = TEST_TEMP_DIR+"/test_append_nohz_full"
         test_source_file = TEST_CASES_DIR+"/grub_exist_isolcpu"
+        test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/grub_append_nohz_full"
         shutil.copy(test_source_file, test_file)
         result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=nohz_full', 'value=0,1,2'])
-        self.assertTrue(filecmp.cmp(test_file, test_source_file) )
+        self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
+        pathlib.Path.unlink(test_file)
+
+    def test_append_ldlibpath(self):
+        test_file = TEST_TEMP_DIR+"/test_append_ldlibpath"
+        test_source_file = TEST_CASES_DIR+"/environment_exist_path_missing_ldlibpath"
+        test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/environment_append_ldlibpath_with_value"
+        shutil.copy(test_source_file, test_file)
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=LD_LIBRARY_PATH', 'value=/usr/local/lib'])
+        self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
+        pathlib.Path.unlink(test_file)
+
+    def test_append_path(self):
+        test_file = TEST_TEMP_DIR+"/test_append_path"
+        test_source_file = TEST_CASES_DIR+"/environment_exist_path_missing_ldlibpath"
+        test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/environment_append_path"
+        shutil.copy(test_source_file, test_file)
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=PATH', 'value=/usr/local/cuda/bin'])
+        self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 
 
