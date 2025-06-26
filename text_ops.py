@@ -41,7 +41,7 @@ def mark_key_in_line(line: str, key: str) -> TextMarkedSpan:
         actual_assignment_string = line[assignment_index : end_char_of_key]
         if(actual_assignment_string != STATIC_KEY_ASSIGNMENT):
             raise AssertionError("Key exists, but it is not followed by assingment sign. Expected sign: " + STATIC_KEY_ASSIGNMENT)
-        span = TextMarkedSpan(line_content=line, content_to_insert="", start_index_to_mark=existing_key_start_index, size_to_delete=0)
+        span = TextMarkedSpan(line_content=line, content_to_insert="", start_index_to_mark=assignment_index+1, size_to_delete=0)
         return span
 
 def set_value_to_span(marked_content: TextMarkedSpan, value: str, delimiter: str) -> None:

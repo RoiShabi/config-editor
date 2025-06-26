@@ -44,6 +44,15 @@ class MainTest(unittest.TestCase):
         self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 
+    def test_append_isolcpu_specific_element(self):
+        test_file = TEST_TEMP_DIR+"/test_append_isolcpu_specific_element"
+        test_source_file = TEST_CASES_DIR+"/grub_exist_isolcpu"
+        test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/grub_append_isolcpu_elements"
+        shutil.copy(test_source_file, test_file)
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=isolcpu', 'value=3'])
+        self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
+        pathlib.Path.unlink(test_file)
+
     def test_append_ldlibpath(self):
         test_file = TEST_TEMP_DIR+"/test_append_ldlibpath"
         test_source_file = TEST_CASES_DIR+"/environment_exist_path_missing_ldlibpath"
