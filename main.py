@@ -32,8 +32,8 @@ def main(input_argv: list[str]) -> int:
     try:
         user_config = parse_params(argv_filtered)
     except Exception as e:
-        print(f"Error: {e}")
-        print("Usage: python main.py file=<file> field=<field> value=<value> [key=<key>]")
+        print(f"Error: {e}\n")
+        print_help()
         return 1
         
     
