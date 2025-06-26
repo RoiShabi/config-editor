@@ -2,20 +2,22 @@
 
 import sys
 from params_parse import parse_params
-from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, TextMarkedSpan, STATIC_LINE_ENDING
+from typing import Optional
+from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, generate_new_line, TextMarkedSpan, STATIC_LINE_ENDING
 
-def main():
-    args = sys.argv[1:]
+def main(argv: list[str]):
+    args = argv[1:]
+    file_path:str
+    field: str
+    value:str
+    key: Optional[str]
     try:
         file_path, field, value, key = parse_params(args)
-        print("Parsed parameters:")
-        print(f"  file     = {file_path}")
-        print(f"  field    = {field}")
-        print(f"  value    = {value}")
-        print(f"  key      = {key}")
     except Exception as e:
-        print(f"Error: {e}\n")
-        print("Usage: python main.py file=<file> field=<field> value=<value> [key=<key>]")
+        print(f"Error: {e}")
+        print("Usage: python main.py file=<file> field=<field> value=<value> [key=<key>]\n\n")
+        raise
+        
     
     with open(file_path, 'r') as file:
         lines_in_file = file.readlines()
@@ -32,12 +34,22 @@ def main():
             content_to_paste_span = mark_key_in_line(selected_line_content, key)
 
         set_value_to_span(content_to_paste_span, value)
-
+        new_line = generate_new_line(content_to_paste_span)
         
 
+
         print("Debug content:")
+        print("Parsed parameters:")
+        print(f"  file     = {file_path}")
+        print(f"  field    = {field}")
+        print(f"  value    = {value}")
+        print(f"  key      = {key}")
+        print(f"Inner variables:")
         print(f"  selected_line_content  = {selected_line_content}")
         print(f"  updated_line_by_key   = {content_to_paste_span}")
+        print(f"  updated_line_result (line {selected_line_index})  =")
+        print(f"  old: {selected_line_content})")
+        print(f"  new: {new_line})")
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv)

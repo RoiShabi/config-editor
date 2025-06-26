@@ -18,7 +18,7 @@ class TextMarkedSpan:
     start_index_to_mark: int = 0
     size_to_delete: int = 0
 
-STATIC_LINE_ENDING = "\n"
+STATIC_LINE_ENDING = "\"\n"
 STATIC_KEY_ASSIGNMENT = "="
 STATIC_VALUES_LIST_SEPERATION = " "
 STATIC_VALUES_SEPERATION = ";"
@@ -45,7 +45,7 @@ def mark_key_in_line(line: str, key: str) -> TextMarkedSpan:
 
 def set_value_to_span(marked_content: TextMarkedSpan, value: str) -> None:
     # First, we create new string with where existing value may be presented
-    # It's range is from the end of the already marked span, to a STATIC_VALUE_SEPERATION
+    # It's range is from the end of the already marked span, to a STATIC_VALUES_LIST_SEPERATION
     index_to_cut_before = marked_content.start_index_to_mark + marked_content.size_to_delete
     line_content_cut_before = marked_content.line_content[index_to_cut_before:]
     index_to_cut_after = line_content_cut_before.find(STATIC_VALUES_LIST_SEPERATION)
@@ -61,7 +61,12 @@ def set_value_to_span(marked_content: TextMarkedSpan, value: str) -> None:
         return
     else:
         is_there_value_before = len(line_content_cut_before_and_after) == 0
-        value_prefix = ""
-        if(not is_there_value_before):
-            value_prefix = STATIC_VALUES_SEPERATION
-        marked_content.content_to_insert += STATIC_VALUES_SEPERATION + value
+        element_prefix = ""
+        if(is_there_value_before):
+            element_prefix = STATIC_VALUES_SEPERATION
+
+        marked_content.content_to_insert += element_prefix + value
+
+def generate_new_line(marked_content: TextMarkedSpan) -> str:
+    newline = marked_content.line_content[:marked_content.start_index_to_mark] + marked_content.content_to_insert + marked_content.line_content[marked_content.start_index_to_mark + marked_content.size_to_delete:]
+    return newline
