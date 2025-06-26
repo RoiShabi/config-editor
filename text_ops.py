@@ -18,6 +18,7 @@ class TextMarkedSpan:
     start_index_to_mark: int = 0
     size_to_delete: int = 0
 
+# TODO: export to parameters
 STATIC_LINE_ENDING = "\"\n"
 STATIC_FIELD_ASSIGNMENT = "=\""
 STATIC_KEY_ASSIGNMENT = "="
@@ -61,7 +62,7 @@ def set_value_to_span(marked_content: TextMarkedSpan, value: str) -> None:
     if(line_content_cut_before_and_after.find(value) != -1):
         return
     else:
-        is_there_value_after = len(line_content_cut_before_and_after) != 0
+        is_there_value_after = line_content_cut_before_and_after != STATIC_LINE_ENDING
         element_suffix = ""
         if(is_there_value_after):
             element_suffix = STATIC_VALUES_SEPERATION

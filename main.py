@@ -44,7 +44,9 @@ def main(argv: list[str]):
         if(original_line_content != new_line):
             # Write if there was actual change
             lines_in_file[selected_line_index] = new_line
+            file.seek(0)
             file.writelines(lines_in_file)
+            file.truncate()
 
 
         print("Debug content:")
