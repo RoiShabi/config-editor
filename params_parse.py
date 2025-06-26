@@ -1,7 +1,18 @@
 from typing import Any, Optional, Tuple
+from dataclasses import dataclass
 
 
-def parse_params(args: str) -> Tuple[str, str, str, Optional[str]]:
+DEFAULT_DELIMITER = ","
+
+@dataclass
+class ScriptConfiguration:
+    file_path:str
+    field: str
+    value:str
+    key: Optional[str]
+    delimiter: str
+
+def parse_params(args: str) -> ScriptConfiguration:
     # extract parameters
 
     params = dict(arg.split('=', 1) for arg in args)
@@ -11,6 +22,7 @@ def parse_params(args: str) -> Tuple[str, str, str, Optional[str]]:
     value = params.get("value")
     file_path = params.get("file")
     key_opt = params.get("key")  # optional
+    delimiter_opt = params.get("delimiter")  # if not exist 
 
     # sanity checks: all must be non-empty strings (key may be None)
     def _check_str(name: str, val: Any):
@@ -22,4 +34,7 @@ def parse_params(args: str) -> Tuple[str, str, str, Optional[str]]:
     _check_str('value', value)
     # _check_str('key', key_opt)    This is a comment since key field is optional
 
-    return file_path, field, value, key_opt
+    if(not isinstance(delimiter_opt, str) or not delimiter_opt.strip()):
+        delimiter_opt = DEFAULT_DELIMITER
+    
+    return ScriptConfiguration(file_path, field, value, key_opt, delimiter_opt)

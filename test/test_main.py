@@ -64,7 +64,7 @@ class MainTest(unittest.TestCase):
         test_source_file = TEST_CASES_DIR+"/environment_exist_path_missing_ldlibpath"
         test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/environment_append_ldlibpath_with_value"
         shutil.copy(test_source_file, test_file)
-        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=LD_LIBRARY_PATH', 'value=/usr/local/lib'])
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=LD_LIBRARY_PATH', 'value=/usr/local/lib', 'delimiter=:'])
         self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 
@@ -73,7 +73,7 @@ class MainTest(unittest.TestCase):
         test_source_file = TEST_CASES_DIR+"/environment_exist_path_missing_ldlibpath"
         test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/environment_append_path"
         shutil.copy(test_source_file, test_file)
-        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=PATH', 'value=/usr/local/cuda/bin'])
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=PATH', 'value=/usr/local/cuda/bin', 'delimiter=:'])
         self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 

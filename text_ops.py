@@ -22,8 +22,7 @@ class TextMarkedSpan:
 STATIC_LINE_ENDING = "\"\n"
 STATIC_FIELD_ASSIGNMENT = "=\""
 STATIC_KEY_ASSIGNMENT = "="
-STATIC_VALUES_LIST_SEPERATION = " "
-STATIC_VALUES_SEPERATION = ";"
+STATIC_KEYS_SEPERATION = " "
 
 def mark_key_in_line(line: str, key: str) -> TextMarkedSpan:
     if (not line.endswith(STATIC_LINE_ENDING)):
@@ -32,7 +31,7 @@ def mark_key_in_line(line: str, key: str) -> TextMarkedSpan:
     if(existing_key_start_index == -1):
         #doesnt exist
         end_content_index = len(line) - len(STATIC_LINE_ENDING)
-        extended_key_content = STATIC_VALUES_LIST_SEPERATION + key + STATIC_KEY_ASSIGNMENT
+        extended_key_content = STATIC_KEYS_SEPERATION + key + STATIC_KEY_ASSIGNMENT
         span = TextMarkedSpan(line_content=line, content_to_insert=extended_key_content, start_index_to_mark=end_content_index, size_to_delete=0)
         return span
     else:
@@ -45,12 +44,12 @@ def mark_key_in_line(line: str, key: str) -> TextMarkedSpan:
         span = TextMarkedSpan(line_content=line, content_to_insert="", start_index_to_mark=existing_key_start_index, size_to_delete=0)
         return span
 
-def set_value_to_span(marked_content: TextMarkedSpan, value: str) -> None:
+def set_value_to_span(marked_content: TextMarkedSpan, value: str, delimiter: str) -> None:
     # First, we create new string with where existing value may be presented
     # It's range is from the end of the already marked span, to a STATIC_VALUES_LIST_SEPERATION
     index_to_cut_before = marked_content.start_index_to_mark + marked_content.size_to_delete
     line_content_cut_before = marked_content.line_content[index_to_cut_before:]
-    index_to_cut_after = line_content_cut_before.find(STATIC_VALUES_LIST_SEPERATION)
+    index_to_cut_after = line_content_cut_before.find(STATIC_KEYS_SEPERATION)
     
     line_content_cut_before_and_after: str
     if(index_to_cut_after == -1):
@@ -65,7 +64,7 @@ def set_value_to_span(marked_content: TextMarkedSpan, value: str) -> None:
         is_there_value_after = line_content_cut_before_and_after != STATIC_LINE_ENDING
         element_suffix = ""
         if(is_there_value_after):
-            element_suffix = STATIC_VALUES_SEPERATION
+            element_suffix = delimiter
 
         marked_content.content_to_insert += value + element_suffix
 
