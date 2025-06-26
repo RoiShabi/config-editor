@@ -43,4 +43,4 @@ def parse_params(argv: list[str]) -> ScriptConfiguration:
     if(not isinstance(delimiter_opt, str) or not delimiter_opt.strip()):
         delimiter_opt = DEFAULT_DELIMITER
     
-    return ScriptConfiguration(file_path, field, value, key_opt, delimiter_opt)
+    return ScriptConfiguration(file_path=file_path, field=field, value=value, key=key_opt, delimiter=delimiter_opt)
