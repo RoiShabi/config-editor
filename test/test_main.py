@@ -4,6 +4,7 @@ import sys
 import shutil
 import pathlib
 import unittest
+import filecmp
 
 root_dir = str(pathlib.Path(__file__).parent.parent)
 sys.path.insert(0, root_dir)
@@ -50,12 +51,11 @@ class MainTest(unittest.TestCase):
 
     def test_append_nohz_full(self):
         test_file = TEST_TEMP_DIR+"/test_append_nohz_full"
-        shutil.copy(TEST_CASES_DIR+"/grub_exist_isolcpu", test_file)
+        test_source_file = TEST_CASES_DIR+"/grub_exist_isolcpu"
+        shutil.copy(test_source_file, test_file)
         result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=nohz_full', 'value=0,1,2'])
-        # TODO: assert verbose output behavior
-        # e.g.:
-        # self.assertEqual(result.returncode, 0)
-        # self.assertIn('Verbose mode enabled', result.stdout)
+        self.assertTrue(filecmp.cmp(test_file, test_source_file) )
+        pathlib.Path.unlink(test_file)
 
 
 if __name__ == '__main__':
