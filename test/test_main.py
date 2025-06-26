@@ -5,6 +5,9 @@ import shutil
 import pathlib
 import unittest
 import filecmp
+import io
+from contextlib import redirect_stdout
+
 
 root_dir = str(pathlib.Path(__file__).parent.parent)
 sys.path.insert(0, root_dir)
@@ -18,22 +21,16 @@ TEST_SUBJECT_FILE = root_dir+"main.py"
 
 class MainTest(unittest.TestCase):
     def test_no_args_inprocess(self):
-        with self.assertRaises(TypeError) as cm:
-            subject_main([TEST_SUBJECT_FILE])
+        errcode = subject_main([TEST_SUBJECT_FILE])
+        self.assertNotEqual(errcode, 0)
 
-    # def test_help_flag(self):
-    #     result = subject_main(['--help'])
-    #     # TODO: assert that help message is shown
-    #     # e.g.:
-    #     self.assertEqual(result.returncode, 0)
-    #     self.assertIn('Usage', result.stdout)
-
-    # def test_additional_option(self):
-    #     result = subject_main(['--verbose'])
-    #     # TODO: assert verbose output behavior
-    #     # e.g.:
-    #     # self.assertEqual(result.returncode, 0)
-    #     # self.assertIn('Verbose mode enabled', result.stdout)
+    def test_help_flag(self):
+        captured_stdout = io.StringIO()
+        with redirect_stdout(captured_stdout):
+            result = subject_main([TEST_SUBJECT_FILE, '--help'])
+            self.assertEqual(result, 0)
+        out_buff = captured_stdout.getvalue()
+        self.assertIn('Usage', out_buff)
 
     def test_append_nohz_full(self):
         test_file = TEST_TEMP_DIR+"/test_append_nohz_full"

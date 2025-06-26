@@ -21,20 +21,20 @@ def print_help():
     help_msg += "\n"
     print(help_msg)
 
-def main(input_argv: list[str]):
+def main(input_argv: list[str]) -> int:
     argv_filtered = input_argv[1:]
 
     if(check_help_params(argv_filtered)):
         print_help()
-        return
+        return 0
 
     user_config: ScriptConfiguration
     try:
         user_config = parse_params(argv_filtered)
     except Exception as e:
         print(f"Error: {e}")
-        print("Usage: python main.py file=<file> field=<field> value=<value> [key=<key>]\n\n")
-        raise
+        print("Usage: python main.py file=<file> field=<field> value=<value> [key=<key>]")
+        return 1
         
     
     with open(user_config.file_path, 'r+') as file:
@@ -78,6 +78,9 @@ def main(input_argv: list[str]):
         print(f"  updated_line_result (line {selected_line_index})  =")
         print(f"  old: {original_line_content}")
         print(f"  new: {new_line}")
+        
+        return 0
 
 if __name__ == "__main__":
-    main(sys.argv)
+    errcode = main(sys.argv)
+    exit(errcode)
