@@ -10,25 +10,25 @@
             "name": "Environment file - LD_LIBRARY_PATH",
             "type": "debugpy",
             "request": "launch",
-            "program": "main.py",
+            "program": "test/test_main.py",
             "console": "integratedTerminal",
-            "args": ["file=/etc/environment", "field=LD_LIBRARY_PATH=", "value=;/usr/local/lib/"]
-        },
-        {
-            "name": "Environment file - PATH",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "main.py",
-            "console": "integratedTerminal",
-            "args": ["file=/etc/environment", "field=PATH=", "value=;/usr/local/lib/"]
-        },
-        {
-            "name": "Grub file",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "main.py",
-            "console": "integratedTerminal",
-            "args": ["file=/etc/default/grub", "field=GRUB_CMDLINE_LINUX_DEFAULT=", "key=isolcpus", "value=0-10"]
         }
+        ,
+        // {
+        //     "name": "Environment file - PATH",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "program": "main.py",
+        //     "console": "integratedTerminal",
+        //     "args": ["file=/etc/environment", "field=PATH=", "value=;/usr/local/lib/"]
+        // },
+        // {
+        //     "name": "Grub file",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "program": "main.py",
+        //     "console": "integratedTerminal",
+        //     "args": ["file=/etc/default/grub", "field=GRUB_CMDLINE_LINUX_DEFAULT=", "key=isolcpus", "value=0-10"]
+        // }
     ]
 }
