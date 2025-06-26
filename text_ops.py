@@ -19,7 +19,7 @@ class TextMarkedSpan:
     size_to_delete: int = 0
 
 STATIC_LINE_ENDING = "\"\n"
-STATIC_FIELD_ASSIGNMENT = "="
+STATIC_FIELD_ASSIGNMENT = "=\""
 STATIC_KEY_ASSIGNMENT = "="
 STATIC_VALUES_LIST_SEPERATION = " "
 STATIC_VALUES_SEPERATION = ";"
@@ -61,12 +61,12 @@ def set_value_to_span(marked_content: TextMarkedSpan, value: str) -> None:
     if(line_content_cut_before_and_after.find(value) != -1):
         return
     else:
-        is_there_value_before = len(line_content_cut_before_and_after) == 0
-        element_prefix = ""
-        if(is_there_value_before):
-            element_prefix = STATIC_VALUES_SEPERATION
+        is_there_value_after = len(line_content_cut_before_and_after) != 0
+        element_suffix = ""
+        if(is_there_value_after):
+            element_suffix = STATIC_VALUES_SEPERATION
 
-        marked_content.content_to_insert += element_prefix + value
+        marked_content.content_to_insert += value + element_suffix
 
 def generate_new_line(marked_content: TextMarkedSpan) -> str:
     newline = marked_content.line_content[:marked_content.start_index_to_mark] + marked_content.content_to_insert + marked_content.line_content[marked_content.start_index_to_mark + marked_content.size_to_delete:]

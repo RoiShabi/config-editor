@@ -19,12 +19,14 @@ def main(argv: list[str]):
         raise
         
     
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r+') as file:
         lines_in_file = file.readlines()
         selected_line_index = search_line_index_in_content(lines_in_file, field)
         original_line_content: str
         if (selected_line_index == len(lines_in_file)):
-            original_line_content = ""
+            # Create new line
+            lines_in_file.append("")
+            original_line_content = None
             selected_line_content = field + STATIC_FIELD_ASSIGNMENT + STATIC_LINE_ENDING
         else:
             original_line_content = lines_in_file[selected_line_index]
@@ -32,13 +34,17 @@ def main(argv: list[str]):
         
         if (key is None):
             end_content_index = len(selected_line_content) - len(STATIC_LINE_ENDING)
-            content_to_paste_span = TextMarkedSpan(line_content=selected_line_content, content_to_insert="", start_index_to_mark=end_content_index)
+            content_to_paste_span = TextMarkedSpan(line_content=selected_line_content, content_to_insert="", start_index_to_mark=len(field+STATIC_FIELD_ASSIGNMENT))
         else:
             content_to_paste_span = mark_key_in_line(selected_line_content, key)
 
         set_value_to_span(content_to_paste_span, value)
         new_line = generate_new_line(content_to_paste_span)
         
+        if(original_line_content != new_line):
+            # Write if there was actual change
+            lines_in_file[selected_line_index] = new_line
+            file.writelines(lines_in_file)
 
 
         print("Debug content:")
