@@ -11,6 +11,7 @@ class ScriptConfiguration:
     value:str
     delimiter: str
     key: Optional[str]
+    accept: Optional[bool]
 
 def check_help_params(argv: str) -> bool:
     if(len(argv) != 1):
@@ -28,6 +29,7 @@ def parse_params(argv: list[str]) -> ScriptConfiguration:
     value = params.get("value")
     file_path = params.get("file")
     key_opt = params.get("key")  # optional
+    accept_opt = params.get("accept")
     delimiter_opt = params.get("delimiter")  # if not exist 
 
     # sanity checks: all must be non-empty strings (key may be None)
@@ -43,4 +45,5 @@ def parse_params(argv: list[str]) -> ScriptConfiguration:
     if(not isinstance(delimiter_opt, str) or not delimiter_opt.strip()):
         delimiter_opt = DEFAULT_DELIMITER
     
-    return ScriptConfiguration(file_path=file_path, field=field, value=value, key=key_opt, delimiter=delimiter_opt)
+    return ScriptConfiguration(file_path=file_path, field=field, value=value,key=key_opt,
+                               delimiter=delimiter_opt, accept=accept_opt)

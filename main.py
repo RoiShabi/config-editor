@@ -21,6 +21,20 @@ def print_help():
     help_msg += "\n"
     print(help_msg)
 
+def show_changes(old_line: str, new_line: str, line_number: int):
+    pass
+
+def resolve_is_accepted(user_config: ScriptConfiguration) -> bool:
+    if(isinstance(user_config.accept, bool)):
+        return user_config.accept
+    while True:
+        answer = input(f"Do you want to save changes? [y/n]: ").strip().lower()
+        if answer in ('y', 'yes'):
+            return True
+        if answer in ('n', 'no'):
+            return False
+        print("Please enter 'y' or 'n'.")
+
 def main(input_argv: list[str]) -> int:
     argv_filtered = input_argv[1:]
 
@@ -58,8 +72,9 @@ def main(input_argv: list[str]) -> int:
 
         set_value_to_span(content_to_paste_span, user_config.value, user_config.delimiter)
         new_line = generate_new_line(content_to_paste_span)
-        
-        if(original_line_content != new_line):
+
+        show_changes(original_line_content, new_line, selected_line_index)
+        if(original_line_content != new_line and resolve_is_accepted(user_config)):
             # Write if there was actual change
             lines_in_file[selected_line_index] = new_line
             file.seek(0)
