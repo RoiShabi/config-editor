@@ -18,7 +18,7 @@ def print_help():
         "\tkey=...\t\tUsed if files where under the field the values are organized in a key=value or key=value1,value2 pairs\n"\
         "\t\t\t  e.g \',\' is used in format \"\"GRUB_CMDLINE_LINUX_DEFAULT=\"isolcpu=element1,element2,element3\" \"\"\n"\
         \
-        "\taccept=...\t\tDon't show interactive approval of the change before writing the changes, preferred for scripts.\n"\
+        "\taccept=...\tDon't show interactive approval of the change before writing the changes, preferred for scripts.\n"\
         "\t\t\t  yes -> Write changes without asking.\n"\
         "\t\t\t  no -> Dont write anything, like a dry-run.\n"\
 
