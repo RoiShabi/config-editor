@@ -37,7 +37,7 @@ class MainTest(unittest.TestCase):
         test_source_file = TEST_CASES_DIR+"/grub_exist_isolcpu"
         test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/grub_append_nohz_full"
         shutil.copy(test_source_file, test_file)
-        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=nohz_full', 'value=0,1,2'])
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=nohz_full', 'value=0,1,2', 'accept=yes'])
         self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 
@@ -46,7 +46,7 @@ class MainTest(unittest.TestCase):
         test_source_file = TEST_CASES_DIR+"/grub_exist_isolcpu"
         test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/grub_append_isolcpu_elements"
         shutil.copy(test_source_file, test_file)
-        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=isolcpu', 'value=3'])
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=isolcpu', 'value=3', 'accept=yes'])
         self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 
@@ -54,7 +54,7 @@ class MainTest(unittest.TestCase):
         test_file = TEST_TEMP_DIR+"/test_do_nothing_isolcpu_element_exist"
         test_source_file = TEST_CASES_DIR+"/grub_exist_isolcpu"
         shutil.copy(test_source_file, test_file)
-        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=isolcpu', 'value=0'])
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=GRUB_CMDLINE_LINUX_DEFAULT', 'key=isolcpu', 'value=0', 'accept=yes'])
         self.assertTrue(filecmp.cmp(test_file, test_source_file) )
         pathlib.Path.unlink(test_file)
 
@@ -63,7 +63,7 @@ class MainTest(unittest.TestCase):
         test_source_file = TEST_CASES_DIR+"/environment_exist_path_missing_ldlibpath"
         test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/environment_append_ldlibpath_with_value"
         shutil.copy(test_source_file, test_file)
-        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=LD_LIBRARY_PATH', 'value=/usr/local/lib', 'delimiter=:'])
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=LD_LIBRARY_PATH', 'value=/usr/local/lib', 'delimiter=:', 'accept=yes'])
         self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 
@@ -72,7 +72,7 @@ class MainTest(unittest.TestCase):
         test_source_file = TEST_CASES_DIR+"/environment_exist_path_missing_ldlibpath"
         test_expected_result = TEST_EXPECTED_RESULTS_DIR+"/environment_append_path"
         shutil.copy(test_source_file, test_file)
-        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=PATH', 'value=/usr/local/cuda/bin', 'delimiter=:'])
+        result = subject_main([TEST_SUBJECT_FILE, f'file={test_file}', 'field=PATH', 'value=/usr/local/cuda/bin', 'delimiter=:', 'accept=yes'])
         self.assertTrue(filecmp.cmp(test_file, test_expected_result) )
         pathlib.Path.unlink(test_file)
 
