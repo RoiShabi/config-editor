@@ -87,14 +87,15 @@ def main(input_argv: list[str]) -> int:
             file.writelines(lines_in_file)
             file.truncate()
 
-        print("Debug content:")
-        print("Parsed parameters:")
-        print(f"  file     = {user_config.file_path}")
-        print(f"  field    = {user_config.field}")
-        print(f"  value    = {user_config.value}")
-        print(f"  key      = {user_config.key}")
-        print(f"  delimiter      = {user_config.delimiter}")
-        print(f"  accept      = {user_config.accept}")
+        # # Debug information
+        # print("Debug content:")
+        # print("Parsed parameters:")
+        # print(f"  file     = {user_config.file_path}")
+        # print(f"  field    = {user_config.field}")
+        # print(f"  value    = {user_config.value}")
+        # print(f"  key      = {user_config.key}")
+        # print(f"  delimiter      = {user_config.delimiter}")
+        # print(f"  accept      = {user_config.accept}")
 
         return 0
 
