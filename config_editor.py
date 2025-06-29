@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import sys
-from params_parse import check_help_params, parse_params, accept_string_to_bool, ScriptConfiguration
+from src.params_parse import check_help_params, parse_params, accept_string_to_bool, ScriptConfiguration
 from typing import Optional
-from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, generate_new_line, TextMarkedSpan, STATIC_LINE_ENDING, STATIC_FIELD_ASSIGNMENT
+from src.text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, generate_new_line, TextMarkedSpan, STATIC_LINE_ENDING, STATIC_FIELD_ASSIGNMENT
 
 def print_help():
     help_msg = \
