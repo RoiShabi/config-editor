@@ -11,7 +11,7 @@ from contextlib import redirect_stdout
 
 root_dir = str(pathlib.Path(__file__).parent.parent)
 sys.path.insert(0, root_dir)
-from main import main as subject_main
+from config_editor import main as subject_main
 
 
 TEST_TEMP_DIR = root_dir+"/test/temp"
