@@ -10,25 +10,9 @@
             "name": "Environment file - LD_LIBRARY_PATH",
             "type": "debugpy",
             "request": "launch",
-            "program": "test/test_main.py",
+            "program": "main.py",
+            "args": ["file=./test/test_cases/environment_exist_path_missing_ldlibpath", "field=LD_LIBRARY_PATH", "value=/usr/local/lib delimiter=:", "accept=no"],
             "console": "integratedTerminal",
         }
-        ,
-        // {
-        //     "name": "Environment file - PATH",
-        //     "type": "debugpy",
-        //     "request": "launch",
-        //     "program": "main.py",
-        //     "console": "integratedTerminal",
-        //     "args": ["file=/etc/environment", "field=PATH=", "value=;/usr/local/lib/"]
-        // },
-        // {
-        //     "name": "Grub file",
-        //     "type": "debugpy",
-        //     "request": "launch",
-        //     "program": "main.py",
-        //     "console": "integratedTerminal",
-        //     "args": ["file=/etc/default/grub", "field=GRUB_CMDLINE_LINUX_DEFAULT=", "key=isolcpus", "value=0-10"]
-        // }
     ]
 }

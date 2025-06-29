@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-from params_parse import check_help_params, parse_params, ScriptConfiguration
+from params_parse import check_help_params, parse_params, accept_string_to_bool, ScriptConfiguration
 from typing import Optional
 from text_ops import search_line_index_in_content, mark_key_in_line, set_value_to_span, generate_new_line, TextMarkedSpan, STATIC_LINE_ENDING, STATIC_FIELD_ASSIGNMENT
 
@@ -21,18 +21,20 @@ def print_help():
     help_msg += "\n"
     print(help_msg)
 
-def show_changes(old_line: str, new_line: str, line_number: int):
-    pass
+def show_changes(old_line: str, new_line: str, zero_index_line_number: int) -> None:
+    line_number = zero_index_line_number+1
+    print(f"Changes: (line {line_number})")
+    print(f"old: {old_line}")
+    print(f"new: {new_line}")
 
 def resolve_is_accepted(user_config: ScriptConfiguration) -> bool:
-    if(isinstance(user_config.accept, bool)):
+    if(user_config.accept is not None):
         return user_config.accept
     while True:
-        answer = input(f"Do you want to save changes? [y/n]: ").strip().lower()
-        if answer in ('y', 'yes'):
-            return True
-        if answer in ('n', 'no'):
-            return False
+        answer = input(f"Do you want to save changes? [y/n]: ").strip()
+        bool_answer = accept_string_to_bool(answer)
+        if(bool_answer is not None):
+            return bool_answer
         print("Please enter 'y' or 'n'.")
 
 def main(input_argv: list[str]) -> int:
@@ -81,19 +83,15 @@ def main(input_argv: list[str]) -> int:
             file.writelines(lines_in_file)
             file.truncate()
 
-
         print("Debug content:")
         print("Parsed parameters:")
         print(f"  file     = {user_config.file_path}")
         print(f"  field    = {user_config.field}")
         print(f"  value    = {user_config.value}")
         print(f"  key      = {user_config.key}")
-        print(f"Inner variables:")
-        print(f"  updated_line_by_key   = {content_to_paste_span}")
-        print(f"  updated_line_result (line {selected_line_index})  =")
-        print(f"  old: {original_line_content}")
-        print(f"  new: {new_line}")
-        
+        print(f"  delimiter      = {user_config.delimiter}")
+        print(f"  accept      = {user_config.accept}")
+
         return 0
 
 if __name__ == "__main__":

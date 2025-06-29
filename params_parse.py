@@ -29,7 +29,7 @@ def parse_params(argv: list[str]) -> ScriptConfiguration:
     value = params.get("value")
     file_path = params.get("file")
     key_opt = params.get("key")  # optional
-    accept_opt = params.get("accept")
+    accept_str = params.get("accept")
     delimiter_opt = params.get("delimiter")  # if not exist 
 
     # sanity checks: all must be non-empty strings (key may be None)
@@ -42,8 +42,18 @@ def parse_params(argv: list[str]) -> ScriptConfiguration:
     _check_str('value', value)
     # _check_str('key', key_opt)    This is a comment since key field is optional
 
+    accept_opt: Optional[bool] = None
+    if(accept_str is not None):
+        accept_opt = accept_string_to_bool(accept_str)
     if(not isinstance(delimiter_opt, str) or not delimiter_opt.strip()):
         delimiter_opt = DEFAULT_DELIMITER
     
     return ScriptConfiguration(file_path=file_path, field=field, value=value,key=key_opt,
                                delimiter=delimiter_opt, accept=accept_opt)
+
+def accept_string_to_bool(user_input: str) -> Optional[bool]:
+    user_input_lower = user_input.lower()
+    if user_input_lower in ('y', 'yes'):
+        return True
+    if user_input_lower in ('n', 'no'):
+        return False
